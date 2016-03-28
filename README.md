@@ -8,9 +8,11 @@ The benchmarks were ran between two Digital Ocean droplets in the same data cent
 The bodies.lua script cycles through requests.geo.jsonl composed of ~1k MTA buses are used to emulate taxis and 10k+ tweets emulate ride requests.
 The fences are based on NYC 2010 Census Tracts. All data is in [nyc](nyc)
 
-Profiling graphs generated from pprof are ran using the --profile file to mount the /pprof/debug endpoints and can be found in the [pprof directory](pprof).
+Profiling graphs generated from pprof are ran using the --profile flag to mount the /pprof/debug endpoints while being loaded with traffic from a seperate droplet. They and can be found in the [pprof directory](pprof).
 
 The binary used for these benchmarks is included in this repo
+
+## Setup
 
 @gofence
 * 1 Intel(R) Xeon(R) CPU E5-2620 0 @ 2.00GHz
@@ -35,6 +37,29 @@ TCP window size: 85.0 KByte (default)
 [ ID] Interval       Transfer     Bandwidth
 [  3]  0.0-10.0 sec  1.06 GBytes   908 Mbits/sec
 ```
+## Profiling
+
+These are the stats taken from pprof while being loaded from a wrk on a seperate droplet.
+
+| Fence     | Ratio  | fence.Get | json.Marshal | json.Unmarshal | http.readReqest | http.finishRequest | runtime.gcBgMarkWorker | Total | Other |
+|-----------|-------:|----------:|-------------:|---------------:|----------------:|-------------------:|-----------------------:|------:|------:|
+| brute     | 73.55% |     22.02 |         1.67 |           1.54 |            1.06 |               1.60 |                   1.11 | 29.94 |  0.94 |
+| city      | 37.49% |     11.15 |         3.84 |           3.31 |            2.77 |               3.63 |                   2.84 | 29.74 |  2.20 |
+| bbox      | 30.35% |      9.04 |         3.87 |           4.29 |            3.12 |               4.08 |                   2.93 | 29.97 |  2.64 |
+| city_bbox | 12.88% |      3.70 |         4.93 |           4.43 |            3.50 |               5.02 |                   3.92 | 28.72 |  3.22 |
+| qtree_z14 |  6.66% |      1.98 |         5.95 |           4.97 |            3.78 |               5.29 |                   4.60 | 29.74 |  3.17 |
+| rtree     |  5.68% |      1.70 |         5.85 |           5.25 |            3.60 |               5.75 |                   4.57 | 29.92 |  3.20 |
+| s2_z16    |  2.99% |      0.89 |         6.97 |           5.16 |            4.78 |               5.98 |                   2.88 | 29.73 |  3.07 |
+
+
+![chart link broken](https://docs.google.com/spreadsheets/d/1PYoxb7nhPA_zrh9oPFnUH0mvo8geYvEkjfe8Jtc0vvY/pubchart?oid=1153428443&format=image)
+
+[interactive link](https://docs.google.com/spreadsheets/d/1PYoxb7nhPA_zrh9oPFnUH0mvo8geYvEkjfe8Jtc0vvY/pubchart?oid=1153428443&format=interactive)
+
+
+## HTTP Benchmarking
+
+THe HTTP Benchmarking was done using wrk on a single thread with 50 connections over 5 minutes
 
 This is a baseline benchmark. /engarde returns a text string.
 
