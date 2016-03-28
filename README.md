@@ -6,14 +6,17 @@ Implementation at https://github.com/buckhx/gofence
 
 The benchmarks were ran between two Digital Ocean droplets in the same data center with private networking enabled
 The bodies.lua script cycles through requests.geo.jsonl composed of ~1k MTA buses are used to emulate taxis and 10k+ tweets emulate ride requests.
-The fences are based on NYC 2010 Census Tracts. All data is in /nyc
+The fences are based on NYC 2010 Census Tracts. All data is in [nyc](nyc)
+
+Profiling graphs generated from pprof are ran using the --profile file to mount the /pprof/debug endpoints and can be found in the [pprof directory](pprof).
+
+The binary used for these benchmarks is included in this repo
 
 @gofence
 * 1 Intel(R) Xeon(R) CPU E5-2620 0 @ 2.00GHz
 * Ubuntu 15.04
 * fence v0.0.4
 * go 1.6
-* wrk 4.0.0
 * Private Networking - NYC3
 
 @wrkr
