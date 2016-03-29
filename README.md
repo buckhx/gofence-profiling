@@ -61,7 +61,7 @@ These are the stats taken from pprof while being loaded from a wrk on a seperate
 
 THe HTTP Benchmarking was done using wrk on a single thread with 50 connections over 5 minutes
 
-#### Requests / Second
+### Requests / Second
 
 | Fence | Avg  | Max  | StDev | StDev (+/-) |
 |-------|-----:|-----:|------:|------------:|
@@ -70,9 +70,7 @@ THe HTTP Benchmarking was done using wrk on a single thread with 50 connections 
 | rtree | 4925 | 8130 |  1850 |      61.62% |
 | s2    | 5429 | 7810 |  1100 |      72.71% |
 
-![chart link broken](https://docs.google.com/spreadsheets/d/1PYoxb7nhPA_zrh9oPFnUH0mvo8geYvEkjfe8Jtc0vvY/pubchart?oid=2000899835&format=image)
-
-#### Latency
+### Latency
 
 | Fence | Avg   | Max    | StDev | StDev (+/-) |
 |-------|------:|-------:|------:|------------:|
@@ -81,6 +79,7 @@ THe HTTP Benchmarking was done using wrk on a single thread with 50 connections 
 | rtree | 14.01 | 185.69 | 16.82 |      89.68% |
 | s2    | 10.51 |  84.00 |  8.62 |      81.33% |
 
+![chart link broken](https://docs.google.com/spreadsheets/d/1PYoxb7nhPA_zrh9oPFnUH0mvo8geYvEkjfe8Jtc0vvY/pubchart?oid=2000899835&format=image)
 
 This is a baseline benchmark. /engarde returns a text string.
 
